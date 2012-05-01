@@ -114,51 +114,63 @@ Template::Plain - A Perl extension for very simple templates.
 
   use Template::Plain;
 
+  # Basic usage includes... 
+
+  # Constructing a template by passing it's content. 
   my $template = Template::Plain->new("Hello, <%World%>!\n");
+
+  # Then filling the template's place holders.
   my $ref = $template->fill({ World => 'Perl People' });
+
+  # And doing something with the result. 
   print $$ref
-  exit(0);
 
-  # Also try the bells, whistles, and variations! Like...
+  # More advanced usage includes... 
 
-  # Filling placeholders with other thingies!
+  # Filling place holders with other thingies.
   my $textref = $template->fill( { Foo => \$scalar_ref,
                                    Bar => \@or_a_list,
                                    Baz => \&a_sub_ref, } );
 
-  # Default Content!
+  # Explicitly using "default" content.
   my $template = Template::Plain->new();
 
-  # Default Content via a class method!
+  # Implicitly using "default" content via a class method.
   Template::Plain->fill({ PlaceHolder => 'Your Favorite Value' });
 
-  # Change your delimiters!
+  # Upate the template content with the result of filling it. 
+  $template->fill({ Name => "[: first_name :] [: last_name :]" }, 1);
+
+  # Changing your delimiters.
   $template->delimiters('[:', ':]');
 
-  # Change your list separator!
+  # Changing your list separator.
   $template->list_separator(':');
 
-  # Find the tag names in your Content!
+  # Finding the tag names in your content.
   my @tags = $template->tags();
 
 
 =head1 DESCRIPTION
 
-This module allows for filling in placeholders in templates. It is meant to
-exceedingly simple. It does not make it possible for you to actually put code
-in your templates. If that is what you want, there are many other (less simple)
-modules that would be a better choice.
+Template::Plain fills place holders in templates. It is meant to be simple and 
+lightweight. 
 
-Template::Plain works in two (intermixable) modes. When the provided methods are
-called as class methods, they operate on a default template object stored in a
-private class variable. This default template is created the first time any of
-the methods are called as class methods. It is created by calling the
-constructor without any arguments.
+Place holders consist of a name between two delimiters. White space between the 
+name and the delimiters is ignored. The default delimiters are "<%" and "%>" 
+but they can be changed. For example, the text "My name is <% name %>" contains 
+the place holder: "<% name %>". This place holder would be equivalent to 
+"<%name%>" (without whitespace.) 
 
-I've found this module to be extremely useful. I use it for all manner of things. 
-Template::Plain is simple but your use of it doesn't have to be. Template::Plain can 
-do a lot, especially if you make heavy use of the delimiters() method and the optional
-argument to fill().
+Template::Plain works in two modes. When the provided methods are called as 
+class methods, they operate on a default template object stored in a private 
+class variable. This default template is created by calling the constructor 
+without arguments, thus using the "Default Content" described in the 
+documentation of the new() method below.
+
+Template::Plain is simple but your use of it doesn't have to be. Template::Plain 
+can do a lot, especially if you make use of the delimiters() method and the 
+optional argument to fill().
 
 =head1 METHODS
 
@@ -170,19 +182,21 @@ all.
 When it is called with an argument, the argument is taken to be the
 template content. 
 
-When it is called without an argument, the template content is read from a 
-filehandle. Which filehandle it is read from is determined as follows: If the 
-DATA filehandle is found in the calling package, the template content is read 
-from that. Else if the DATA filehandle is found in main::, the template content 
-is read from there.  Otherwise, the template content is read from the ARGV 
-filehandle.
+=head3 Default Content
+
+When the constructor is called without an argument, the template content is 
+read from a filehandle. Which filehandle it is read from is determined as 
+follows: If the DATA filehandle is found in the calling package, the template 
+content is read from that. Else if the DATA filehandle is found in main::, the
+template content is read from there.  Otherwise, the template content is read 
+from the ARGV filehandle.
 
 =head2 fill
 
 This method expects a single hashref as an argument. 
 
 The keys of the hash referred to by the hashref should coincide with the 
-placeholder names and the values should be the data to be substituted (or 
+place holder names and the values should be the data to be substituted (or 
 references to the data.) 
 
 If a value is found to be a reference, it will be called if it is a code 
@@ -193,7 +207,7 @@ Note that a reference to a hash isn't handled specially at all.
 
 An optional argument can be supplied. If it is a true value, the template 
 object's content will be replaced with the result of filling in its 
-placeholders. This can be useful for recursively filling templates.
+place holders. This can be useful for recursively filling templates.
 
 This method returns a reference to a scalar holding the text resulting from 
 filling the template. 
@@ -203,7 +217,7 @@ filling the template.
 This method takes 0, 1, or 2 arguments. 
 
 When called with at least one argument, it sets the delimiters used to define 
-placeholders in the template. 
+place holders in the template. 
 
 If there is exactly one argument, it is assumed to be a reference to
 an array containing the left and right delimiters in that order. When called
@@ -223,7 +237,7 @@ This method takes either zero arguments or exactly one scalar argument.
 
 If it is called with an argument, the list separator value is set to that
 value.  The list separator is a string which is used to separate the values 
-when a placeholder is filled with an array.
+when a place holder is filled with an array.
 
 This method always returns the current list separator. 
 
@@ -231,8 +245,9 @@ By default, the list separator is a newline ("\n").
 
 =head2 tags
 
-This method takes no arguments. It returns a list of the placeholder names
-used in the template.
+This method takes no arguments. It returns a list of the place holder names
+used in the template in the order that they are used. If you use the same place
+holder more than once, it will appear in the returned list more than once. 
 
 =head1 IMPORTANT NOTE
 
