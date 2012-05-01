@@ -12,4 +12,6 @@ t/02-advanced-fill.t
 t/03-advanced-delims.t
 t/04-recursive-fill.t
 t/05-tags.t
+t/06-default-content-1.t
+t/07-default-content-2.t
 lib/Template/Plain.pm

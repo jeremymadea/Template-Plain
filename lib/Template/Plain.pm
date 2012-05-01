@@ -299,6 +299,10 @@ L<http://cpanratings.perl.org/d/Template-Plain>
 
 L<http://search.cpan.org/dist/Template-Plain/>
 
+=item * Repository on github
+
+L<https://github.com/jeremymadea/Template-Plain>
+
 =back
 
 
