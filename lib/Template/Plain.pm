@@ -1,6 +1,6 @@
 package Template::Plain;
 
-use 5.010001;
+use 5.006000;
 use strict;
 use warnings;
 
