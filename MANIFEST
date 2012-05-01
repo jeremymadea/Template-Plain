@@ -2,5 +2,9 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/Template-Plain.t
+t/0-boilerplate.t
+t/0-manifest.t
+t/0-pod-coverage.t
+t/0-pod.t
+t/00-load.t
 lib/Template/Plain.pm
