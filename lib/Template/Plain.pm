@@ -308,7 +308,7 @@ L<https://github.com/jeremymadea/Template-Plain>
 
 =head1 VERSION
 
-Template::Simple version 1.00, released May, 2012
+Template::Plain version 1.00, released May, 2012
 
 =head1 COPYRIGHT AND LICENSE
 
